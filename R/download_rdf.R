@@ -7,7 +7,7 @@
 #'
 #' @examples
 #' download_rdf(c("28/7/2021", "4/8/2021"))
-download_rdf <- function(rdf_dates) {
+download_rdf <- function(rdf_dates = c("")) {
   rdf_dates <- lubridate::dmy(rdf_dates)
 
   BNB_page <- rvest::read_html("https://www.bl.uk/collection-metadata/new-bnb-records")
