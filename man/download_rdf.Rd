@@ -12,7 +12,7 @@ download_rdf(file_location, rdf_dates = c(""))
 \item{rdf_dates}{user-defined dates in the format d/m/y for which RDF files they want to download. If no argument is supplied, the most recent 25 records are downloaded}
 }
 \value{
-RDF files in the "raw data/zipped" directory
+RDF files in the user-defined directory
 }
 \description{
 Download new British National Bibliography records in RDF format

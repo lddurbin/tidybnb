@@ -3,7 +3,7 @@
 #' @param rdf_dates user-defined dates in the format d/m/y for which RDF files they want to download. If no argument is supplied, the most recent 25 records are downloaded
 #' @param file_location character string of path to directory where RDF file(s) will be stored
 #'
-#' @return RDF files in the "raw data/zipped" directory
+#' @return RDF files in the user-defined directory
 #' @export
 #'
 #' @examples
