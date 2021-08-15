@@ -9,9 +9,7 @@
 #' @examples
 #' file_dates <- c("28/7/2021", "4/8/2021")
 #' download_rdf("raw data/rdf", file_dates)
-download_rdf <- function(file_location, rdf_dates = c("")) {
-  rdf_dates <- lubridate::dmy(rdf_dates)
-
+download_rdf <- function(file_location, rdf_dates = c()) {
   BNB_page <- rvest::read_html("https://www.bl.uk/collection-metadata/new-bnb-records")
 
   BNB_page_rdfs <- BNB_page %>%
@@ -38,6 +36,7 @@ download_rdf <- function(file_location, rdf_dates = c("")) {
     stringr::str_to_lower()
 
   if(length(rdf_dates) > 0) {
+    rdf_dates <- lubridate::dmy(rdf_dates)
     files_to_download <- which(BNB_rdf_dates %in% rdf_dates)
     target_slugs <- BNB_urls_hashed[files_to_download]
     target_urls <- lapply(target_slugs, utils::URLencode) %>% unlist()
