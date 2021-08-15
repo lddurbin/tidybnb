@@ -1,13 +1,15 @@
 #' Download new British National Bibliography records in RDF format
 #'
 #' @param rdf_dates user-defined dates in the format d/m/y for which RDF files they want to download. If no argument is supplied, the most recent 25 records are downloaded
+#' @param file_location character string of path to directory where RDF file(s) will be stored
 #'
 #' @return RDF files in the "raw data/zipped" directory
 #' @export
 #'
 #' @examples
-#' download_rdf(c("28/7/2021", "4/8/2021"))
-download_rdf <- function(rdf_dates = c("")) {
+#' file_dates <- c("28/7/2021", "4/8/2021")
+#' download_rdf("raw data/rdf", file_dates)
+download_rdf <- function(file_location, rdf_dates = c("")) {
   rdf_dates <- lubridate::dmy(rdf_dates)
 
   BNB_page <- rvest::read_html("https://www.bl.uk/collection-metadata/new-bnb-records")
@@ -41,12 +43,12 @@ download_rdf <- function(rdf_dates = c("")) {
     target_urls <- lapply(target_slugs, utils::URLencode) %>% unlist()
     target_filenames <- BNB_rdf_filenames[files_to_download]
 
-    utils::download.file(target_urls, destfile = paste0(here::here("raw data/zipped/"), target_filenames), method = "libcurl")
+    utils::download.file(target_urls, destfile = paste0(file_location, "/", target_filenames), method = "libcurl")
   } else {
     target_slugs <- BNB_urls_hashed
     target_urls <- lapply(target_slugs, utils::URLencode) %>% unlist()
     target_filenames <- BNB_rdf_filenames
 
-    utils::download.file(target_urls, destfile = paste0(here::here("raw data/zipped/"), target_filenames), method = "libcurl")
+    utils::download.file(target_urls, destfile = paste0(file_location, "/", target_filenames), method = "libcurl")
   }
 }
