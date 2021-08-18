@@ -4,12 +4,14 @@
 \alias{download_rdf}
 \title{Download new British National Bibliography records in RDF format}
 \usage{
-download_rdf(file_location, files_to_download = c(TRUE))
+download_rdf(file_location, files_to_download = c(TRUE), file_format = "gzip")
 }
 \arguments{
 \item{file_location}{character string of path to directory where RDF file(s) will be stored}
 
 \item{files_to_download}{user-defined dates in the format d/m/y for which RDF files they want to download. If no argument is supplied, the most recent 25 records are downloaded}
+
+\item{file_format}{file type of downloaded files, either "zip" (original format), "rdf" (decompressed format) or "gzip" (re-compressed and suitable for uploading to Virtuoso)}
 }
 \value{
 RDF files in the user-defined directory

@@ -17,5 +17,7 @@ Imports:
     here,
     lubridate,
     magrittr,
+    purrr,
     rvest,
-    stringr
+    stringr,
+    utils

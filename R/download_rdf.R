@@ -2,6 +2,7 @@
 #'
 #' @param files_to_download user-defined dates in the format d/m/y for which RDF files they want to download. If no argument is supplied, the most recent 25 records are downloaded
 #' @param file_location character string of path to directory where RDF file(s) will be stored
+#' @param file_format file type of downloaded files, either "zip" (original format), "rdf" (decompressed format) or "gzip" (re-compressed and suitable for uploading to Virtuoso)
 #'
 #' @return RDF files in the user-defined directory
 #' @export
@@ -9,7 +10,7 @@
 #' @examples
 #' file_dates <- c("28/7/2021", "4/8/2021")
 #' download_rdf("raw data/rdf", file_dates)
-download_rdf <- function(file_location, files_to_download = c(TRUE)) {
+download_rdf <- function(file_location, files_to_download = c(TRUE), file_format = "gzip") {
   BNB_page <- rvest::read_html("https://www.bl.uk/collection-metadata/new-bnb-records")
 
   BNB_page_rdfs <- BNB_page %>%
@@ -35,13 +36,17 @@ download_rdf <- function(file_location, files_to_download = c(TRUE)) {
     stringr::str_sub(2) %>%
     stringr::str_to_lower()
 
-  if(files_to_download != TRUE) {
+  if(!is.logical(files_to_download)) {
     files_to_download <- which(BNB_rdf_dates %in% lubridate::dmy(files_to_download))
   }
 
-  target_slugs <- BNB_urls_hashed[files_to_download]
-  target_urls <- lapply(target_slugs, utils::URLencode) %>% unlist()
-  target_filenames <- BNB_rdf_filenames[files_to_download]
+  target_urls <- lapply(BNB_urls_hashed[files_to_download], utils::URLencode) %>% unlist()
+  target_file_locations <- paste0(file_location, "/", BNB_rdf_filenames[files_to_download])
 
-  utils::download.file(target_urls, destfile = paste0(file_location, "/", target_filenames), method = "libcurl")
+  utils::download.file(target_urls, destfile = target_file_locations, method = "libcurl")
+
+  if(file_format == "rdf" | file_format == "gzip") {
+    purrr::walk(target_file_locations, utils::unzip, exdir = file_location)
+    # lapply(list.files("raw data/zipped", pattern = ".rdf$", full.names = TRUE), R.utils::gzip, ext = "gz", remove = TRUE)
+  }
 }
