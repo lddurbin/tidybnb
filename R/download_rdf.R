@@ -9,7 +9,7 @@
 #' @examples
 #' file_dates <- c("28/7/2021", "4/8/2021")
 #' download_rdf("raw data/rdf", file_dates)
-download_rdf <- function(file_location, rdf_dates = c()) {
+download_rdf <- function(file_location, rdf_dates = c(TRUE)) {
   BNB_page <- rvest::read_html("https://www.bl.uk/collection-metadata/new-bnb-records")
 
   BNB_page_rdfs <- BNB_page %>%
@@ -38,16 +38,11 @@ download_rdf <- function(file_location, rdf_dates = c()) {
   if(length(rdf_dates) > 0) {
     rdf_dates <- lubridate::dmy(rdf_dates)
     files_to_download <- which(BNB_rdf_dates %in% rdf_dates)
-    target_slugs <- BNB_urls_hashed[files_to_download]
-    target_urls <- lapply(target_slugs, utils::URLencode) %>% unlist()
-    target_filenames <- BNB_rdf_filenames[files_to_download]
-
-    utils::download.file(target_urls, destfile = paste0(file_location, "/", target_filenames), method = "libcurl")
-  } else {
-    target_slugs <- BNB_urls_hashed
-    target_urls <- lapply(target_slugs, utils::URLencode) %>% unlist()
-    target_filenames <- BNB_rdf_filenames
-
-    utils::download.file(target_urls, destfile = paste0(file_location, "/", target_filenames), method = "libcurl")
   }
+
+  target_slugs <- BNB_urls_hashed[files_to_download]
+  target_urls <- lapply(target_slugs, utils::URLencode) %>% unlist()
+  target_filenames <- BNB_rdf_filenames[files_to_download]
+
+  utils::download.file(target_urls, destfile = paste0(file_location, "/", target_filenames), method = "libcurl")
 }

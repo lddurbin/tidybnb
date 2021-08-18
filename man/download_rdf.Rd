@@ -4,7 +4,7 @@
 \alias{download_rdf}
 \title{Download new British National Bibliography records in RDF format}
 \usage{
-download_rdf(file_location, rdf_dates = c(""))
+download_rdf(file_location, rdf_dates = c(TRUE))
 }
 \arguments{
 \item{file_location}{character string of path to directory where RDF file(s) will be stored}
