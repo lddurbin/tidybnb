@@ -1,11 +1,10 @@
 Package: tidybnb
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Explore data on the latest books published in the UK
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Lee Durbin
+Maintainer: The package maintainer <l.d.durbin@gmail.com>
+Description: Download data on the latest British National Bibliographt records.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -18,6 +17,7 @@ Imports:
     lubridate,
     magrittr,
     purrr,
+    R.utils,
     rvest,
     stringr,
     utils

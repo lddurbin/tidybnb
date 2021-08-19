@@ -45,8 +45,11 @@ download_rdf <- function(file_location, files_to_download = c(TRUE), file_format
 
   utils::download.file(target_urls, destfile = target_file_locations, method = "libcurl")
 
-  if(file_format == "rdf" | file_format == "gzip") {
+  if(file_format == "rdf") {
     purrr::walk(target_file_locations, utils::unzip, exdir = file_location)
-    # lapply(list.files("raw data/zipped", pattern = ".rdf$", full.names = TRUE), R.utils::gzip, ext = "gz", remove = TRUE)
+    unlink(target_file_locations)
+    if(file_format == "gzip") {
+      lapply(target_file_locations %>% stringr::str_replace(".zip", ".rdf"), R.utils::gzip, ext = "gz", remove = TRUE)
+    }
   }
 }
