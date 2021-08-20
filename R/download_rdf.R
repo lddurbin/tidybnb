@@ -4,7 +4,7 @@
 #' @param file_location character string of path to directory where RDF file(s) will be stored
 #' @param file_format file type of downloaded files, either "zip" (original format), "rdf" (decompressed format) or "gzip" (re-compressed and suitable for uploading to Virtuoso)
 #'
-#' @return RDF files in the user-defined directory
+#' @return RDF files in the user-defined directory, formatted as .rdf.gzip (or as specified)
 #' @export
 #'
 #' @examples

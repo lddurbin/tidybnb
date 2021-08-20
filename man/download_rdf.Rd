@@ -14,7 +14,7 @@ download_rdf(file_location, files_to_download = c(TRUE), file_format = "gzip")
 \item{file_format}{file type of downloaded files, either "zip" (original format), "rdf" (decompressed format) or "gzip" (re-compressed and suitable for uploading to Virtuoso)}
 }
 \value{
-RDF files in the user-defined directory
+RDF files in the user-defined directory, formatted as .rdf.gzip (or as specified)
 }
 \description{
 Download new British National Bibliography records in RDF format
