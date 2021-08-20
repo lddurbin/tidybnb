@@ -25,10 +25,10 @@ download_rdf <- function(file_location, files_to_download = c(TRUE)) {
     stringr::str_sub(2) %>%
     stringr::str_to_lower()
 
-  if(!is.logical(files_to_download)) {
-    files_to_download <- which(BNB_rdf_dates %in% lubridate::dmy(files_to_download))
-  } else if(files_to_download == stringr::str_to_lower("newest")) {
+  if(files_to_download == stringr::str_to_lower("newest")) {
     files_to_download <- c(1)
+  } else if(!is.logical(files_to_download)) {
+    files_to_download <- which(BNB_rdf_dates %in% lubridate::dmy(files_to_download))
   }
 
   target_urls <- lapply(BNB_rdf_urls[files_to_download], utils::URLencode) %>% unlist()
@@ -60,8 +60,8 @@ get_rdf_urls <- function(BNB_page) {
 }
 
 zip_to_rdf <- function(target_file_locations, file_location) {
-    purrr::walk(target_file_locations, utils::unzip, exdir = file_location)
-    unlink(target_file_locations)
+  purrr::walk(target_file_locations, utils::unzip, exdir = file_location)
+  unlink(target_file_locations)
 }
 
 rdf_to_gzip <- function(target_file_location) {
