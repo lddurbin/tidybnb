@@ -9,7 +9,7 @@ download_rdf(file_location, files_to_download = c(TRUE))
 \arguments{
 \item{file_location}{character string of path to directory where the file(s) will be stored}
 
-\item{files_to_download}{user-defined dates in the format d/m/y for which RDF files they want to download. If no argument is supplied, the most recent 25 records are downloaded}
+\item{files_to_download}{user-defined dates in the format d/m/y for which RDF files they want to download. Pass "newest" to retrieve the most recent file. If no argument is supplied, the most recent 25 records are downloaded}
 }
 \value{
 RDF files in the user-defined directory, formatted as .rdf.gzip
@@ -19,5 +19,5 @@ Download new British National Bibliography records in RDF format
 }
 \examples{
 file_dates <- c("28/7/2021", "4/8/2021")
-download_rdf("raw data/rdf", file_dates)
+download_rdf(here:::here(), file_dates)
 }

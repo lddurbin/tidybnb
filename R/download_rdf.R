@@ -1,6 +1,6 @@
 #' Download new British National Bibliography records in RDF format
 #'
-#' @param files_to_download user-defined dates in the format d/m/y for which RDF files they want to download. If no argument is supplied, the most recent 25 records are downloaded
+#' @param files_to_download user-defined dates in the format d/m/y for which RDF files they want to download. Pass "newest" to retrieve the most recent file. If no argument is supplied, the most recent 25 records are downloaded
 #' @param file_location character string of path to directory where the file(s) will be stored
 #'
 #' @return RDF files in the user-defined directory, formatted as .rdf.gzip
@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' file_dates <- c("28/7/2021", "4/8/2021")
-#' download_rdf("raw data/rdf", file_dates)
+#' download_rdf(here:::here(), file_dates)
 download_rdf <- function(file_location, files_to_download = c(TRUE)) {
   BNB_page <- rvest::read_html("https://www.bl.uk/collection-metadata/new-bnb-records")
 
@@ -27,6 +27,8 @@ download_rdf <- function(file_location, files_to_download = c(TRUE)) {
 
   if(!is.logical(files_to_download)) {
     files_to_download <- which(BNB_rdf_dates %in% lubridate::dmy(files_to_download))
+  } else if(files_to_download == stringr::str_to_lower("newest")) {
+    files_to_download <- c(1)
   }
 
   target_urls <- lapply(BNB_rdf_urls[files_to_download], utils::URLencode) %>% unlist()
