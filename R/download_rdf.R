@@ -36,7 +36,8 @@ download_rdf <- function(file_location, files_to_download = c(TRUE)) {
 
   utils::download.file(target_urls, destfile = target_file_locations, method = "libcurl")
 
-  gzip_files(target_file_locations, file_location)
+  zip_to_rdf(target_file_locations, file_location)
+  rdf_to_gzip(target_file_locations %>% stringr::str_replace(".zip", ".rdf"))
 }
 
 
@@ -58,8 +59,11 @@ get_rdf_urls <- function(BNB_page) {
     rvest::html_attr("href")
 }
 
-gzip_files <- function(target_file_locations, file_location) {
+zip_to_rdf <- function(target_file_locations, file_location) {
     purrr::walk(target_file_locations, utils::unzip, exdir = file_location)
     unlink(target_file_locations)
-    lapply(target_file_locations %>% stringr::str_replace(".zip", ".rdf"), R.utils::gzip, ext = "gz", remove = TRUE)
+}
+
+rdf_to_gzip <- function(target_file_location) {
+  lapply(target_file_location, R.utils::gzip, ext = "gz", remove = TRUE)
 }
