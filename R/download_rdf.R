@@ -1,4 +1,4 @@
-#' Download new British National Bibliography records in RDF format
+#' Download new British National Bibliography records in RDF format from https://www.bl.uk/collection-metadata/new-bnb-records
 #'
 #' @param files_to_download user-defined dates in the format d/m/y for which RDF files they want to download. Pass "newest" to retrieve the most recent file. If no argument is supplied, the most recent 25 records are downloaded
 #' @param file_location character string of path to directory where the file(s) will be stored

@@ -2,7 +2,7 @@
 % Please edit documentation in R/download_rdf.R
 \name{download_rdf}
 \alias{download_rdf}
-\title{Download new British National Bibliography records in RDF format}
+\title{Download new British National Bibliography records in RDF format from https://www.bl.uk/collection-metadata/new-bnb-records}
 \usage{
 download_rdf(file_location, files_to_download = c(TRUE))
 }
@@ -15,7 +15,7 @@ download_rdf(file_location, files_to_download = c(TRUE))
 RDF files in the user-defined directory, formatted as .rdf.gzip
 }
 \description{
-Download new British National Bibliography records in RDF format
+Download new British National Bibliography records in RDF format from https://www.bl.uk/collection-metadata/new-bnb-records
 }
 \examples{
 file_dates <- c("28/7/2021", "4/8/2021")
