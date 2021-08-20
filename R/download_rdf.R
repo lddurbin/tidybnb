@@ -58,7 +58,7 @@ get_rdf_urls <- function(BNB_page) {
 }
 
 format_files <- function(file_format, target_file_locations, file_location) {
-  if(file_format == "rdf") {
+  if(file_format == "rdf" | file_format == "gzip") {
     purrr::walk(target_file_locations, utils::unzip, exdir = file_location)
     unlink(target_file_locations)
     if(file_format == "gzip") {
