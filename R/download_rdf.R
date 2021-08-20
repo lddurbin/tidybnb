@@ -1,16 +1,15 @@
 #' Download new British National Bibliography records in RDF format
 #'
 #' @param files_to_download user-defined dates in the format d/m/y for which RDF files they want to download. If no argument is supplied, the most recent 25 records are downloaded
-#' @param file_location character string of path to directory where RDF file(s) will be stored
-#' @param file_format file type of downloaded files, either "zip" (original format), "rdf" (decompressed format) or "gzip" (re-compressed and suitable for uploading to Virtuoso)
+#' @param file_location character string of path to directory where the file(s) will be stored
 #'
-#' @return RDF files in the user-defined directory, formatted as .rdf.gzip (or as specified)
+#' @return RDF files in the user-defined directory, formatted as .rdf.gzip
 #' @export
 #'
 #' @examples
 #' file_dates <- c("28/7/2021", "4/8/2021")
 #' download_rdf("raw data/rdf", file_dates)
-download_rdf <- function(file_location, files_to_download = c(TRUE), file_format = "gzip") {
+download_rdf <- function(file_location, files_to_download = c(TRUE)) {
   BNB_page <- rvest::read_html("https://www.bl.uk/collection-metadata/new-bnb-records")
 
   BNB_page_rdfs <- get_rdf_details(BNB_page)
@@ -35,7 +34,7 @@ download_rdf <- function(file_location, files_to_download = c(TRUE), file_format
 
   utils::download.file(target_urls, destfile = target_file_locations, method = "libcurl")
 
-  format_files(file_format, target_file_locations, file_location)
+  gzip_files(target_file_locations, file_location)
 }
 
 
@@ -57,12 +56,8 @@ get_rdf_urls <- function(BNB_page) {
     rvest::html_attr("href")
 }
 
-format_files <- function(file_format, target_file_locations, file_location) {
-  if(file_format == "rdf" | file_format == "gzip") {
+gzip_files <- function(target_file_locations, file_location) {
     purrr::walk(target_file_locations, utils::unzip, exdir = file_location)
     unlink(target_file_locations)
-    if(file_format == "gzip") {
-      lapply(target_file_locations %>% stringr::str_replace(".zip", ".rdf"), R.utils::gzip, ext = "gz", remove = TRUE)
-    }
-  }
+    lapply(target_file_locations %>% stringr::str_replace(".zip", ".rdf"), R.utils::gzip, ext = "gz", remove = TRUE)
 }
