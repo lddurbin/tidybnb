@@ -17,7 +17,3 @@ RDF files in the user-defined directory, formatted as .rdf.gzip
 \description{
 Download new British National Bibliography records in RDF format from https://www.bl.uk/collection-metadata/new-bnb-records
 }
-\examples{
-file_dates <- c("28/7/2021", "4/8/2021")
-download_rdf(here:::here(), file_dates)
-}

@@ -5,10 +5,6 @@
 #'
 #' @return RDF files in the user-defined directory, formatted as .rdf.gzip
 #' @export
-#'
-#' @examples
-#' file_dates <- c("28/7/2021", "4/8/2021")
-#' download_rdf(here:::here(), file_dates)
 download_rdf <- function(file_location, files_to_download = c(TRUE)) {
   BNB_page <- rvest::read_html("https://www.bl.uk/collection-metadata/new-bnb-records")
 
@@ -25,7 +21,7 @@ download_rdf <- function(file_location, files_to_download = c(TRUE)) {
     stringr::str_sub(2) %>%
     stringr::str_to_lower()
 
-  if(files_to_download == stringr::str_to_lower("newest")) {
+  if(files_to_download[1] == stringr::str_to_lower("newest")) {
     files_to_download <- c(1)
   } else if(!is.logical(files_to_download)) {
     files_to_download <- which(BNB_rdf_dates %in% lubridate::dmy(files_to_download))
