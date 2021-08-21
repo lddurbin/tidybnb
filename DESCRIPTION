@@ -13,6 +13,7 @@ BugReports: https://github.com/lddurbin/tidybnb/issues
 RoxygenNote: 7.1.1
 Imports: 
     dplyr,
+    fs,
     here,
     lubridate,
     magrittr,
@@ -20,7 +21,8 @@ Imports:
     R.utils,
     rvest,
     stringr,
-    utils
+    utils,
+    virtuoso
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

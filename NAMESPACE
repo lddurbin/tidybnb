@@ -2,4 +2,5 @@
 
 export("%>%")
 export(download_rdf)
+export(query_bnb)
 importFrom(magrittr,"%>%")
